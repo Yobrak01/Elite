@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: elite97-study-system-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        fromDatabase:
+          name: elite97-study-system
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
