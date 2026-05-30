@@ -251,17 +251,17 @@ const Schedule = () => {
                         type="checkbox"
                         value={day}
                         checked={isChecked}
-                         onChange={editingId ? (e) => {
-                           const days = editingId ? [...editForm.daysOfWeek] : [...newSchedule.daysOfWeek];
-                           const index = days.indexOf(day);
-                           if (e.target.checked) {
-                             if (index === -1) days.push(day);
-                           } else {
-                             if (index !== -1) days.splice(index, 1);
-                           }
-                           if (editingId) setEditForm({...editForm, daysOfWeek: days});
-                           else setNewSchedule({...newSchedule, daysOfWeek: days});
-                         }}
+onChange={(e) => {
+                            const days = editingId ? [...editForm.daysOfWeek] : [...newSchedule.daysOfWeek];
+                            const index = days.indexOf(day);
+                            if (e.target.checked) {
+                              if (index === -1) days.push(day);
+                            } else {
+                              if (index !== -1) days.splice(index, 1);
+                            }
+                            if (editingId) setEditForm({...editForm, daysOfWeek: days});
+                            else setNewSchedule({...newSchedule, daysOfWeek: days});
+                          }}
                          className="h-4 w-4 text-blue-600 focus:ring-blue-500"
                       />
                       <span>{dayNames[day]}</span>

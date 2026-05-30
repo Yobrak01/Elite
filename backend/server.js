@@ -17,13 +17,27 @@ if (process.env.MONGODB_URI) {
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/elite97', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected'))
-.catch(err => console.log('MongoDB connection error:', err));
+// Connect to MongoDB (use memory server for development if MongoDB not available)
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/elite97');
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.log('MongoDB connection failed, trying in-memory server...');
+    try {
+      const { MongoMemoryServer } = require('mongodb-memory-server');
+      const mongod = await MongoMemoryServer.create();
+      const uri = mongod.getUri();
+      await mongoose.connect(uri);
+      console.log('MongoDB memory server connected');
+    } catch (memErr) {
+      console.error('MongoDB memory server error:', memErr);
+      process.exit(1);
+    }
+  }
+};
+
+connectDB();
 
 // Routes
 app.get('/', (req, res) => {
