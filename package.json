@@ -5,10 +5,6 @@
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
     "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\""
   },
-  "dependencies": {
-    "es-abstract": "^1.24.2",
-    "vite": "^8.0.14"
-  },
   "devDependencies": {
     "concurrently": "^8.2.2"
   }
